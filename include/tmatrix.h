@@ -56,6 +56,7 @@ public:
   // индексация
   T& operator[](size_t ind)
   {
+      return pMem[ind];
   }
   const T& operator[](size_t ind) const
   {
@@ -71,9 +72,11 @@ public:
   // сравнение
   bool operator==(const TDynamicVector& v) const noexcept
   {
+      return 0;
   }
   bool operator!=(const TDynamicVector& v) const noexcept
   {
+      return 0;
   }
 
   // скалярные операции
@@ -139,6 +142,7 @@ public:
   // сравнение
   bool operator==(const TDynamicMatrix& m) const noexcept
   {
+      return 0;
   }
 
   // матрично-скалярные операции
@@ -165,9 +169,11 @@ public:
   // ввод/вывод
   friend istream& operator>>(istream& istr, TDynamicMatrix& v)
   {
+      return istr;
   }
   friend ostream& operator<<(ostream& ostr, const TDynamicMatrix& v)
   {
+      return ostr;
   }
 };
 
