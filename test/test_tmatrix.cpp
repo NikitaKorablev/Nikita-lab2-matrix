@@ -1,4 +1,4 @@
-#include "tmatrix.h"
+#include "../include/tmatrix.h"
 
 #include <gtest.h>
 
