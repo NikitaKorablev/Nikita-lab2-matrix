@@ -28,6 +28,7 @@ public:
   {
     if (sz == 0)
       throw out_of_range("Vector size should be greater than zero");
+    if (sz > MAX_MATRIX_SIZE) throw out_of_range("Exceeding the maximum size");
     pMem = new T[sz]();// {}; // У типа T д.б. констуктор по умолчанию
   }
   TDynamicVector(T* arr, size_t s) : sz(s)
@@ -70,17 +71,28 @@ public:
   // индексация
   T& operator[](size_t ind)
   {
+      if (ind < 0) throw out_of_range("Index must be greater than zero");
+      if (ind >= sz) throw out_of_range("Index must be less than zero");
       return pMem[ind];
   }
   const T& operator[](size_t ind) const
   {
+      if (ind < 0) throw out_of_range("Index must be greater than zero");
+      if (ind >= sz) throw out_of_range("Index must be less than zero");
+      return pMem[ind];
   }
   // индексация с контролем
   T& at(size_t ind)
   {
+      if (ind < 0) throw out_of_range("Index must be greater than zero");
+      if (ind >= sz) throw out_of_range("Index must be less than zero");
+      return pMem[ind];
   }
   const T& at(size_t ind) const
   {
+      if (ind < 0) throw out_of_range("Index must be greater than zero");
+      if (ind >= sz) throw out_of_range("Index must be less than zero");
+      return pMem[ind];
   }
 
   // сравнение
@@ -134,7 +146,7 @@ public:
   // векторные операции
   TDynamicVector operator+(const TDynamicVector& v)
   {
-      TDynamicVector tmp(sz);
+      TDynamicVector tmp(sz >= v.sz ? sz : v.sz);
       int i = 0;
       for (; i < sz && i < v.sz; i++) {
           tmp.pMem[i] = pMem[i] + v.pMem[i];
@@ -150,10 +162,10 @@ public:
   }
   TDynamicVector operator-(const TDynamicVector& v)
   {
-      TDynamicVector tmp(sz);
+      TDynamicVector tmp(sz >= v.sz ? sz : v.sz);
       int i = 0;
       for (; i < sz && i < v.sz; i++) {
-          tmp.pMem[i] = pMem[i] - v.pMem;
+          tmp.pMem[i] = pMem[i] - v.pMem[i];
       }
       for (; i < sz; i++) {
           tmp.pMem[i] = pMem[i];
@@ -211,6 +223,8 @@ public:
 
   using TDynamicVector<TDynamicVector<T>>::operator[];
 
+  size_t size() const noexcept { return sz; }
+
   // сравнение
   bool operator==(const TDynamicMatrix& m) const noexcept
   {
@@ -265,7 +279,7 @@ public:
           tmp.pMem[i] = pMem[i];
       }
       for (; i < m.sz; i++) {
-          tmp.pMem[i] = -m.pMem[i];
+          tmp.pMem[i] = m.pMem[i];
       }
 
       return tmp;
