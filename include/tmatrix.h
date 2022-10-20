@@ -146,40 +146,27 @@ public:
   // векторные операции
   TDynamicVector operator+(const TDynamicVector& v)
   {
-      TDynamicVector tmp(sz >= v.sz ? sz : v.sz);
-      int i = 0;
-      for (; i < sz && i < v.sz; i++) {
+      if (sz != v.sz) throw out_of_range("Not equal sizes");
+      TDynamicVector tmp(sz);
+      for (int i = 0; i < sz && i < v.sz; i++) {
           tmp.pMem[i] = pMem[i] + v.pMem[i];
       }
-      for (; i < sz; i++) {
-          tmp.pMem[i] = pMem[i];
-      }
-      for (; i < v.sz; i++) {
-          tmp.pMem[i] = v.pMem[i];
-      }
-
       return tmp;
   }
   TDynamicVector operator-(const TDynamicVector& v)
   {
+      if (sz != v.sz) throw out_of_range("Not equal sizes");
       TDynamicVector tmp(sz >= v.sz ? sz : v.sz);
-      int i = 0;
-      for (; i < sz && i < v.sz; i++) {
+      for (int i = 0; i < sz && i < v.sz; i++) {
           tmp.pMem[i] = pMem[i] - v.pMem[i];
       }
-      for (; i < sz; i++) {
-          tmp.pMem[i] = pMem[i];
-      }
-      for (; i < v.sz; i++) {
-          tmp.pMem[i] = -v.pMem[i];
-      }
-
       return tmp;
   }
-  T operator*(const TDynamicVector& v) noexcept(noexcept(T()))
+  T operator*(const TDynamicVector& v)
   {
+      if (sz != v.sz) throw out_of_range("Not equal sizes");
       T mul = 0;
-      for (int i = 0; i < sz && i < v.sz; i++) {
+      for (int i = 0; i < sz; i++) {
           mul += pMem[i] * v.pMem[i];
       }
       return mul;
