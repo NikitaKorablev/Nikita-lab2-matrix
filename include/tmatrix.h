@@ -98,22 +98,20 @@ public:
   // сравнение
   bool operator==(const TDynamicVector& v) const noexcept
   {
+      if (this == &v) return true;
       if (sz != v.sz) return false;
-
       for (int i = 0; i < sz; i++) {
           if (pMem[i] != v.pMem[i]) return false;
       }
-
       return true;
   }
   bool operator!=(const TDynamicVector& v) const noexcept
   {
+      if (this == &v) return false;
       if (sz != v.sz) return true;
-
       for (int i = 0; i < sz; i++) {
           if (pMem[i] != v.pMem[i]) return true;
       }
-
       return false;
   }
 
