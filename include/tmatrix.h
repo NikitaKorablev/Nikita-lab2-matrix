@@ -236,12 +236,7 @@ public:
   // матрично-матричные операции
   TDynamicMatrix operator+(const TDynamicMatrix& m)
   {
-      if (sz != m.sz) throw out_of_range("Not equal sizes");
-      TDynamicMatrix tmp(sz);
-      for (int i = 0; i < sz; i++) {
-          tmp.pMem[i] = pMem[i] + m.pMem[i];
-      }
-      return tmp;
+      return TDynamicVector<TDynamicVector<T>>::operator+(m); // вызываем конструктор сравнения предка
   }
   TDynamicMatrix operator-(const TDynamicMatrix& m)
   {
